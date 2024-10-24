@@ -1,14 +1,12 @@
-from fastapi import APIRouter, UploadFile
-
-# from models.handwritting import HandwrittingRequest
+from fastapi import APIRouter, UploadFile, File
 from service.handwritting import handwritting_to_text
 
 router = APIRouter()
 
 
 @router.post("/handwritting")
-async def generate_text(handwritting: UploadFile):
+async def generate_text(handwritting: UploadFile = File(...)):
 
-    result = handwritting_to_text(handwritting)
+    result = await handwritting_to_text(handwritting)
 
     return {"Generated Text": result}
