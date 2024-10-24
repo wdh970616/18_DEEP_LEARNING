@@ -9,10 +9,10 @@ model = AutoModelForVision2Seq.from_pretrained("microsoft/trocr-base-handwritten
 processor = AutoProcessor.from_pretrained("microsoft/trocr-base-handwritten")
 
 
-async def handwritting_to_text(handwritting: UploadFile):
+async def handwriting_to_text(handwriting: UploadFile):
 
     # UploadFile에서 이미지를 PIL.Image로 변환
-    contents = await handwritting.read()
+    contents = await handwriting.read()
 
     try:
         # 이미지를 PIL로 열기 및 RGB로 변환
@@ -22,10 +22,10 @@ async def handwritting_to_text(handwritting: UploadFile):
         raise ValueError("이미지를 처리하는 중 문제가 발생했습니다.")
 
     # 손글씨 이미지 전처리
-    encoded_handwritting = processor(images=image, return_tensors="pt")
+    encoded_handwriting = processor(images=image, return_tensors="pt")
 
     # 추론
-    generated_tokens = model.generate(encoded_handwritting["pixel_values"])
+    generated_tokens = model.generate(encoded_handwriting["pixel_values"])
 
     # 후처리
     generated_text = processor.batch_decode(generated_tokens, skip_special_tokens=True)[

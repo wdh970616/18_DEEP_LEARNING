@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from routers import handwritting
+from practice.routers import handwriting
 
 app = FastAPI()
 
 
-app.include_router(handwritting.router)
+app.include_router(handwriting.router)
